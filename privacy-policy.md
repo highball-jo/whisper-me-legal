@@ -1,7 +1,7 @@
 # Privacy Policy
 
 **Effective Date:** March 23, 2026
-**Last Updated:** March 23, 2026
+**Last Updated:** July 19, 2026
 
 Whisper Me ("we," "us," "our") operates the Whisper Me mobile application (the "App"). This Privacy Policy describes what personal data we collect, how we use it, who we share it with, how long we keep it, and your rights under applicable laws including the EU General Data Protection Regulation (GDPR), Korea's Personal Information Protection Act (PIPA), and the California Consumer Privacy Act (CCPA).
 
@@ -68,7 +68,6 @@ This is the most sensitive category of data we collect.
 |------------|-----------------|-----------|
 | Full conversation transcript (every message you send and every response the companion generates) | Our database (Supabase) | Until you delete your account |
 | Call metadata (duration, start/end time, call status) | Our database | Until you delete your account |
-| Twilio call session ID | Our database | Until you delete your account |
 
 **We do NOT record or store audio.** Voice audio is streamed in real time through our processing pipeline and is never written to disk or saved to any storage system. Only the text transcript is retained.
 
@@ -139,17 +138,18 @@ We share data with the following third-party service providers, solely to operat
 
 ### 4.1 AI and Voice Processing (Server-Side Only)
 
-These services receive data only from our server. Your device never communicates with them directly (except Twilio for call connectivity).
+These services receive data only from our server. Your device never communicates with them directly.
+
+**In-app consent:** Before your first conversation, the App asks for your explicit permission to share conversation data with the AI providers listed below, describing exactly what is sent to whom. Conversation features (voice calls, text chat, image generation) remain disabled until you agree. You can withdraw consent at any time by deleting your account or contacting us at highball@jocoding.net.
 
 | Service | Data Sent | Purpose | Data Retention by Provider |
 |---------|-----------|---------|---------------------------|
-| **xAI (Grok)** | System prompt containing companion personality, your extracted profile facts, recent call summaries, relationship arc, conversation history (last 20 messages), and your current message | Generate AI companion responses; post-call extraction of user facts and call summaries | Refer to [xAI's privacy policy](https://x.ai/legal/privacy-policy). xAI states it may use API inputs to improve models unless you opt out |
-| **Deepgram** | Real-time audio stream (mu-law encoded, 8kHz) from your microphone during calls | Speech-to-text transcription | Refer to [Deepgram's privacy policy](https://deepgram.com/privacy). Audio is processed in real time and not stored by default for API customers |
+| **xAI (Grok)** | System prompt containing companion personality, your extracted profile facts, recent call summaries, relationship arc, conversation history (last 20 messages), and your current message; companion image prompts you write | Generate AI companion responses; post-call extraction of user facts and call summaries; companion image generation | Refer to [xAI's privacy policy](https://x.ai/legal/privacy-policy). xAI states it may use API inputs to improve models unless you opt out |
+| **Deepgram** | Real-time audio stream (16kHz linear PCM) from your microphone during calls | Speech-to-text transcription | Refer to [Deepgram's privacy policy](https://deepgram.com/privacy). Audio is processed in real time and not stored by default for API customers |
 | **MiniMax** | AI-generated response text, voice ID, language code | Text-to-speech synthesis (companion's voice) | Refer to [MiniMax's privacy policy](https://www.minimax.io/privacy-policy) |
 | **OpenAI** | Call summary text (2-3 sentences per call) | Generate semantic embedding vectors for memory retrieval | Refer to [OpenAI's API data usage policy](https://openai.com/policies/api-data-usage-policies). OpenAI states it does not use API data to train models |
-| **Twilio** | Real-time voice audio (bidirectional), call metadata (session ID, duration) | VoIP call connectivity and media streaming | Refer to [Twilio's privacy policy](https://www.twilio.com/en-us/legal/privacy) |
 
-**What this means in practice:** When you speak during a call, your audio is streamed to Deepgram for transcription. The resulting text, along with your conversation history and companion memory context, is sent to xAI's Grok model to generate a response. That response text is sent to MiniMax to produce audio, which is streamed back to you via Twilio. After the call, a summary is sent to OpenAI for embedding generation and to Grok for memory extraction.
+**What this means in practice:** When you speak during a call, your audio is streamed from our server to Deepgram for transcription. The resulting text, along with your conversation history and companion memory context, is sent to xAI's Grok model to generate a response. That response text is sent to MiniMax to produce audio, which is streamed back to you over an encrypted connection. After the call, a summary is sent to OpenAI for embedding generation and to Grok for memory extraction.
 
 ### 4.2 Authentication
 
@@ -163,8 +163,9 @@ These services receive data only from our server. Your device never communicates
 | Service | Data Stored | Purpose |
 |---------|-------------|---------|
 | **Supabase** | All persistent user data (database and file storage) | Managed PostgreSQL database, authentication, real-time subscriptions |
-| **Fly.io or Railway** | Server application and logs (no persistent user data) | API server hosting |
+| **Railway** | Server application and logs (no persistent user data) | API server hosting |
 | **Expo (EAS)** | Application source code during builds | Mobile app build and distribution |
+| **RevenueCat** | App user ID (your account UUID), purchase receipts, subscription status | In-app purchase and subscription management | Refer to [RevenueCat's privacy policy](https://www.revenuecat.com/privacy/) |
 
 ### 4.4 No Other Sharing
 
@@ -315,7 +316,7 @@ We do not knowingly collect personal data from children below these ages. If we 
 The nature of an AI companion app means that conversations are inherently personal. The data we collect and process includes:
 
 - **Emotional and psychological content:** Your conversations may reveal emotional states, mental health concerns, personal anxieties, relationship issues, and other sensitive topics. Our AI extracts and stores emotional tone assessments and personal facts from these conversations.
-- **Intimate content:** The App permits explicit and intimate conversations. Transcripts of such conversations are stored in our database. AI-extracted facts from these conversations may include intimate preferences or relationship details.
+- **Personal and affectionate content:** Conversations with a companion can be personal and affectionate in nature. Transcripts of such conversations are stored in our database. AI-extracted facts from these conversations may include personal preferences or relationship details.
 - **Behavioral patterns:** Over time, the companion memory system builds a detailed profile of your personality, preferences, habits, relationships, work life, and emotional patterns.
 - **Relationship simulation data:** The relationship arc narrative tracks how your simulated relationship with the AI evolves, including milestones and inside jokes.
 
