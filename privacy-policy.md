@@ -1,7 +1,7 @@
 # Privacy Policy
 
 **Effective Date:** March 23, 2026
-**Last Updated:** July 19, 2026
+**Last Updated:** November 27, 2026
 
 Whisper Me ("we," "us," "our") operates the Whisper Me mobile application (the "App"). This Privacy Policy describes what personal data we collect, how we use it, who we share it with, how long we keep it, and your rights under applicable laws including the EU General Data Protection Regulation (GDPR), Korea's Personal Information Protection Act (PIPA), and the California Consumer Privacy Act (CCPA).
 
@@ -98,17 +98,50 @@ After each call or text conversation, our server processes the conversation to e
 | Device identifiers (UDID, advertising ID) | **No** | N/A |
 | GPS location | **No** | N/A |
 | Contacts | **No** | N/A |
-| Photos or camera | **No** | N/A |
+| Photos or camera | Only an image you choose to attach to feedback, or a screenshot of the App's own screen on a problem report you send (see 2.8); no camera access, no photo library scanning | Help us investigate what you report |
+| Motion (accelerometer) | Read on your device only, never sent | Notice a shake to open "Report a problem" (you can turn this off in Settings) |
 | Browsing history | **No** | N/A |
 
 ### 2.7 Data We Do NOT Collect
 
-- We do **not** use analytics SDKs (no Mixpanel, Amplitude, Segment, Firebase Analytics, or similar)
+- We use one product-analytics service, **PostHog** (see 2.9). We do **not** use Mixpanel, Amplitude, Segment, Firebase Analytics, or similar
 - We do **not** use crash reporting services (no Sentry, Crashlytics, or similar)
 - We do **not** use advertising SDKs or tracking pixels
 - We do **not** collect device identifiers or advertising IDs
 - We do **not** use cookies (the App is a native mobile application)
 - We do **not** record or store audio from calls
+
+### 2.8 Feedback, Problem Reports and Answers You Send
+
+When you use **Send feedback** (from the chat screen or Settings), we receive:
+
+| Data Point | Required | Retention |
+|------------|----------|-----------|
+| Your message | Yes | Until account deletion |
+| A screenshot or image you choose to attach (sent as JPEG or PNG up to 1 MB; larger images are shrunk on your device first) | No | Deleted automatically after 90 days, or when you delete your account |
+| Whether you ticked "OK to contact me" | No | Until account deletion |
+| App version, device model, operating system and app language | Yes (sent automatically) | Until account deletion |
+
+When you use **Report a problem** (from Settings, by shaking your phone, or from an error message), we receive the same as above, plus:
+
+| Data Point | Required | Retention |
+|------------|----------|-----------|
+| A screenshot of the App screen you were on, taken just before the report opened. It is attached by default, shown to you, and removed with one tap | No | Deleted automatically after 90 days, or when you delete your account |
+| Technical details: app version and build, operating system and version, device model, app language, the name of the App screen you were on, and the last error code the App recorded | Yes (sent automatically) | Until account deletion |
+
+No logs and no other content from your conversations are attached. A screenshot can show whatever was on that screen, including a chat, so look at the thumbnail before sending.
+
+Now and then the App may ask **one short question** (for example, what stopped you from subscribing, or how you would feel without the App). Your tap is sent as a choice to our analytics (see 2.9). If you also type an optional comment, that text is stored with your feedback in our database, never in analytics.
+
+Feedback, problem reports and comments are linked to your account so that, if you allow it, we can reply to your account email. They are stored in our database and a private storage bucket (Supabase), are read only by us to improve the App, and are never used for advertising or shared with third parties. Only the image you pick, or the screenshot you keep, is uploaded; the App does not read anything else from your photo library.
+
+### 2.9 Product Analytics (PostHog)
+
+To understand how the App is used and where it falls short, the App sends named usage events to PostHog (United States). These include: the app opening, a chat reply or voice call succeeding or failing (no content), running out of Whispers, opening or leaving the Whisper Pass or wallet screens, purchases (product, price and currency), the choices you tap on the short questions and the two optional setup questions in onboarding (what you mainly use the App for, how you heard about it), and problem reports being opened or sent (not their content). Each event carries the app version, operating system, device model, app language and an approximate location derived from your IP address.
+
+Events are linked to your account ID, the same ID our purchase system uses, so that purchases and usage line up. They never contain your messages, your companion's replies, your voice, your email address or any text you type. The App does not record your taps or screens automatically.
+
+**Session replay.** The App includes PostHog session replay, and it is **turned off**. If we turn it on in the future, it records only a small sample of sessions (about 1 in 10 devices), only from the moment you run out of Whispers or open the Whisper Pass or wallet screens. It records only the Whisper Pass, wallet, Settings and language screens. **All text, text fields and images are masked**, so recordings show the layout and taps, not what is written. Recording stops for the rest of the session as soon as you open any other screen (chat, calls, your companions, photos) or a feedback or question sheet. It never captures logs or network traffic. We will update this policy before turning it on.
 
 ---
 
@@ -123,6 +156,7 @@ We use your data for the following purposes:
 | **Time-aware responses** — allow your companion to reference the current time naturally | Performance of contract (Art. 6(1)(b)) | Device timezone |
 | **Language localization** — display the App in your language | Performance of contract (Art. 6(1)(b)) | Device locale, preferred language |
 | **Security** — protect against unauthorized access | Legitimate interest (Art. 6(1)(f)) | Authentication tokens, session data |
+| **Improve the App** — understand how it is used, fix problems you report, learn from your answers | Legitimate interest (Art. 6(1)(f)) | Analytics events (2.9), feedback, problem reports and comments (2.8) |
 
 We do **not** use your data for:
 - Advertising or ad targeting
@@ -166,6 +200,7 @@ These services receive data only from our server. Your device never communicates
 | **Railway** | Server application and logs (no persistent user data) | API server hosting |
 | **Expo (EAS)** | Application source code during builds | Mobile app build and distribution |
 | **RevenueCat** | App user ID (your account UUID), purchase receipts, subscription status | In-app purchase and subscription management | Refer to [RevenueCat's privacy policy](https://www.revenuecat.com/privacy/) |
+| **PostHog** (United States) | Usage events described in 2.9, linked to your account ID; sent directly from the App | Product analytics | Refer to [PostHog's privacy policy](https://posthog.com/privacy) |
 
 ### 4.4 No Other Sharing
 
@@ -214,6 +249,10 @@ In the event of a data breach affecting your personal data, we will notify you a
 | Call summaries and embeddings | Until account deletion | You delete your account |
 | Relationship arc narrative | Until account deletion | You delete your account |
 | Authentication tokens (on device) | Until you sign out | Sign out or account deletion |
+| Feedback messages and device details | Until account deletion | You delete your account |
+| Feedback screenshots and problem-report screenshots | 90 days, or until account deletion if sooner | Automatic deletion, or you delete your account |
+| Problem-report technical details and question comments | Until account deletion | You delete your account |
+| Analytics events (PostHog) | Up to 1 year under our PostHog plan | Automatic expiry; deleted sooner on request (Section 7.4) |
 | Server logs (operational, no user content) | 30 days | Automatic rotation |
 
 **Cascade deletion:** When you delete your account, all associated data is automatically and permanently deleted through database cascade rules: your profile, all companions, all conversations, all messages, all call logs, all extracted memories, all call summaries, and all relationship data.
